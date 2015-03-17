@@ -6,9 +6,11 @@ ROUTES FOR DATA
 ===============
 
 *ADD A DOCUMENT
-path:     /add/documents/{data}
 --------------
+path:     /add/documents/{data}
+
 *GET ALL DOCUMENT
+--------------
 path:     /get/documents
 
 ABSOLUTE LINK FOR DATA
