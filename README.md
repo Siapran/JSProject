@@ -4,10 +4,19 @@ Un Bureau virtuel
 
 ROUTES FOR DATA
 ===============
+
 *ADD A DOCUMENT
 path:     /add/documents/{data}
+--------------
 *GET ALL DOCUMENT
 path:     /get/documents
+
+ABSOLUTE LINK FOR DATA
+======================
+
+http://178.62.102.228/JSProjectSymfony/web/app.php/get/documents
+http://178.62.102.228/JSProjectSymfony/web/app.php/add/document/{DATAJSONSTRINGIFIED/PARSED}
+
 
 DATA
 ==========
@@ -20,5 +29,7 @@ CoreBundle\Entity\Documents:
         type: text
     creationDate:
         type: datetimetz
-        // The date is defined by default when sending to php server
+        // The date is defined by default when sending to php server, we don't need to send this
+        
+
     
