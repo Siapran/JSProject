@@ -1,6 +1,8 @@
 $(function() {
-	$("#accordion")
 	$("#accordion").accordion({
 		heightStyle: "fill"
 	});
+	$("#tabs").tabs({
+		heightStyle: "fill"
+	})
 });
