@@ -26,21 +26,29 @@ function save(element) {
 	// I iterate throught the tab to save only the active document
 	tab.children().each(function() {
 		if ($(this).attr("class") == $(".title").attr("class")) // If the current objct have class title then it's the title of the doc
-			title = $(this).text();
+			title = $(this).html();
 		else if ($(this).attr("class") == $(".content").attr("class")) // same for content
-			content = $(this).text();
+			content = $(this).html();
 		else if ($(this).attr("class") == $(".id").attr("class")) // same for id
-			id = $(this).text();
+			id = $(this).html();
 	});
 
 	var myDocument = new Object();
 	myDocument.myTitle = title;
 	myDocument.myContent = content + "}"; // sino nca bug...
-
+	var openedDocs = "";
+	var buffer = $("#tabs").children();
+	while (buffer)
+	{
+		if (buffer.attr("class") == "title")
+			openedDocs = openedDocs + buffer.html() + "|";
+		buffer = buffer.next();
+	}
+	openedDocs = substr(openedDocs, 0, openedDocs.length-2);
 	$.ajax({
 	  method: "POST",
-	  url: "http://178.62.102.228/JSProjectSymfony/web/app.php/add/document/",
-	  data: { myId:id, myTitle:title, myContent: content }
+	  url: "./ajaxJSProjectAdd.php",
+	  data: { path:title, myContent: content, myOpenedDocs: openedDocs }
 	})
 	.done(function() {
 		alert("Document saved");
@@ -51,7 +59,7 @@ function initDocuments() {
 	$.ajax({
 		method: "GET",
 		async: false,
-	 	url: "http://178.62.102.228/JSProjectSymfony/web/app.php/get/documents",
+	 	url: "./ajaxJSProjectGet.php",
 	})
 	.done(function(data) {
 		$.each(data, function() {
