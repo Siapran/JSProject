@@ -3,8 +3,8 @@ $(function() {
 		heightStyle: "fill"
 	});
 	
-	initDocuments();
-
+/*	initDocuments();
+*/
 	$("#tabs").tabs({ 
 	beforeLoad: function( event, ui ) {
     	if ( ui.tab.data( "loaded" ) ) {
@@ -17,6 +17,20 @@ $(function() {
 	    });},
 		heightStyle: "fill"
 	})
+
+	  oDoc = document.getElementById("content");
+
+
+
+  var oContent = $("#content");
+    oContent = oContent.createTextNode(oDoc.innerHTML);
+    oDoc.innerHTML = "";
+    var oPre = document.createElement("pre");
+    oDoc.contentEditable = false;
+    oPre.id = "sourceText";
+    oPre.contentEditable = true;
+    oPre.appendChild(oContent);
+    oDoc.appendChild(oPre);
 });
 
 function save(element) {
@@ -55,7 +69,7 @@ function save(element) {
 	});
 }
 
-function initDocuments() {
+/*function initDocuments() {
 	$.ajax({
 		method: "GET",
 		async: false,
@@ -78,5 +92,18 @@ function initDocuments() {
 			$("#tabs").append($("<div/>").attr("id", "tab" + elem.id).append(title).append(id).append(titleEdit).append(tools).append(content));
 		})
 	});
+}*/
+
+function load(element){
+	(element).designMode = "On";
+}
+
+function getIFrameDocument(aID){
+    return document.getElementById(aID).contentDocument;
+}
+
+function doRichEditCommand(aName, aArg){
+	getIFrameDocument('editorWindow').execCommand(aName,false, aArg);
+	document.getElementById('editorWindow').contentWindow.focus()
 }
 

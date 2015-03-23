@@ -54,10 +54,10 @@
 		<div class="workspace">
 			<div id="tabs">
 				<ul id="listOfTabs">
-					<!-- Will be filled thanks to ajax -->
+					<li><a href="#tab1">tab1</a></li>
 				</ul>
 				<!-- Should be filled thanks to ajax -->
-<!--				<div id="tab1">
+				<div id="tab1">
  					<h4 class="inline">Title : </h4>
 					<div class="id">1</div> id of the document. It's usefull for the server to identify either to update or insert a new document 
 					<div class="title" contenteditable="true"><h1>Lorem ipsum</h1></div>
@@ -76,9 +76,9 @@
 							<li><img src="images/edit-list-order.png"></li>
 						</ul>
 					</div>
-					<div class="content" contenteditable="true"><p>Lorem ipsum</p></div>
+					<div id="content" class="content" contenteditable="true" onload="load(this)"><p>Lorem ipsum</p></div>
 				</div>
-				<div id="tab2">
+<!-- 				<div id="tab2">
 					<p>Lel</p>
 				</div>
 				<div id="tab3">
