@@ -17,67 +17,22 @@ $(function() {
 	    });},
 		heightStyle: "fill"
 	});
-	// int i = -1; // va commencer à 0 avec l'incrémentation
 
+    $.ajax({
+        async : true,
+        type : "GET",
+        url : "./ajaxGetTree.php?dir=homeDir",
+        dataType : "json",    
 
-    // $.ajax({
-    //     async : true,
-    //     type : "GET",
-    //     url : "./test.json",
-    //     dataType : "json",    
+        success : function(json) {
+            $('#tree').jstree(json);
+        },    
 
-    //     success : function(json) {
-    //         createJSTrees(json);
-    //     },    
-
-    //     error : function(xhr, ajaxOptions, thrownError) {
-    //         alert(xhr.status);
-    //         alert(thrownError);
-    //     }
-    // });
-	var jsonData = {
-		"text": "textEditor",
-		"icon": "./images/blue-folder.png",
-		"children": [{
-			"text": "textEditor.html",
-			"icon": "./images/blue-document.png"
-		}, {
-			"text": "textEditor.css",
-			"icon": "./images/blue-document.png"
-		}, {
-			"text": "textEditor.js",
-			"icon": "./images/blue-document.png"
-		} ]
-	};
-	//createJSTrees(jsonData);
-
-
-	// function createJSTrees(jsonData) {
-	// 	console.log("hi");
-	//     $("#tree").jstree({
-	//         "json_data" : {
-	//             "data" : jsonData
-	//         },
-	//         // "plugins" : [ "themes", "json_data", "ui" ]
-	//     });
-	// }    
-
-	// $('#tree').jstree({
- //    'core' : {
- //        'data' : {
- //            'url' : './test.json',
- //            'data' : function (node) {
- //            	console.log(node);
- //                i++;
- //                return { 'id' : i, 'text': node.text,  };
-
- //            }
- //        }
- //    }});
-
-$('#tree').jstree({ 'core' : {
-    'data' : [ jsonData ]
-} });
+        error : function(xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+        }
+    });
 
 	//font
 	size = 1;
