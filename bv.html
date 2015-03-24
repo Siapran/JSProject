@@ -63,17 +63,17 @@
 					<div class="title" contenteditable="true"><h1>Lorem ipsum</h1></div>
 					<div class="tools">
 						<ul class="listOfTools">
-							<li onclick="save(this)"><img src="images/disk.png"></li>
-							<li><img src="images/blue-document-page-next.png"></li>
-							<li><img src="images/blue-document-page-previous.png"></li>
-							<li><img src="images/edit-alignment-left.png"></li>
-							<li><img src="images/edit-alignment-center.png"></li>
-							<li><img src="images/edit-alignment-right.png"></li>
-							<li><img src="images/edit-italic.png"></li>
-							<li><img src="images/edit-bold.png"></li>
-							<li><img src="images/edit-underline.png"></li>
-							<li><img src="images/edit-list.png"></li>
-							<li><img src="images/edit-list-order.png"></li>
+							<li onclick="save(this)" id="save"><img src="images/disk.png"></li>
+							<li onclick="putStyle(this)" id="redo"><img src="images/blue-document-page-next.png"></li>
+							<li onclick="putStyle(this)" id="undo"><img src="images/blue-document-page-previous.png"></li>
+							<li onclick="putStyle(this)" id="justifyleft"><img src="images/edit-alignment-left.png"></li>
+							<li onclick="putStyle(this)" id="justifycenter"><img src="images/edit-alignment-center.png"></li>
+							<li onclick="putStyle(this)" id="justifyright"><img src="images/edit-alignment-right.png"></li>	
+							<li onclick="putStyle(this)" id="italic"><img src="images/edit-italic.png"></li>
+							<li onclick="putStyle(this)" id="bold"><img src="images/edit-bold.png"></li>
+							<li onclick="putStyle(this)" id="underline"><img src="images/edit-underline.png"></li>
+							<li onclick="putStyle(this)" id="InsertUnorderedList"><img src="images/edit-list.png"></li>
+							<li onclick="putStyle(this)" id="InsertOrderedList"><img src="images/edit-list-order.png"></li>
 						</ul>
 					</div>
 					<div id="content" class="content" contenteditable="true" onload="load(this)"><p>Lorem ipsum</p></div>
