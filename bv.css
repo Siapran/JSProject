@@ -15,7 +15,7 @@ body {
 	float: left;
 	padding: 0.25%;
 	margin: 0px;
-	width: 24.25%;
+	width:28%;
 	height: 99%;
 }
 
@@ -24,7 +24,7 @@ body {
 	padding: 0.25%;
 	padding-left: 0px;
 	margin: 0px;
-	width: 75%;
+	width: 71%;
 	height: 99%;
 }
 
@@ -92,4 +92,9 @@ body {
 }
 .id {
 	display: none;
+}
+
+#calculatrice, #calculatrice iframe {
+	padding: 0;
+	margin: 0;
 }
