@@ -41,8 +41,8 @@ function get_tree($dir) {
 
 echo "{ \"core\" : {
     \"data\" : [";
-echo get_tree("..");
-// echo get_tree($_GET["dir"]);
+// echo get_tree("..");
+echo get_tree($_GET["dir"]);
 echo "]
 } }";
 
