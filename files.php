@@ -21,7 +21,7 @@ function delete_file($path) {
 	unlink($path);
 }
 
-/*function get_tree($dir) {
+function get_tree($dir) {
 	$handle = opendir($dir);
 	$res = "";
 	$file = readdir($handle);
@@ -32,44 +32,15 @@ function delete_file($path) {
 			$res .= "'text': '".$file."'";
 			$path = $dir.'/'.$file;
 			if (is_dir($path)) {
-				$res .= ", 'icon': './images/blue-folder.png'";
+				$res .= ", 'icon': 'images/blue-folder.png'";
 				$res .= ", 'children': [".get_tree($path)."]";
 			} else {
-				$res .= ", 'icon': './images/blue-document.png'";
+				$res .= ", 'icon': 'images/blue-document.png'";
 			}
 			$res .= "}";
 			if (($file = readdir($handle)) !== false)
 				$res .= ",";
 		} else $file = readdir($handle);
-	}
-
-	closedir($handle);
-
-	return $res;
-}*/
-
-
-function get_tree($dir) {
-	$handle = opendir($dir);
-	$res = "";
-	
-	$files = glob($dir."[^.]*");
-
-	for ($i=0; $i < count($files); $i++) { 
-		$file = $files[i];
-		$res .= "{";
-		$res .= "'text': '".$file."'";
-		$path = $dir.'/'.$file;
-		if (is_dir($path)) {
-			$res .= ", 'icon': './images/blue-folder.png'";
-			$res .= ", 'children': [".get_tree($path)."]";
-		} else {
-			$res .= ", 'icon': './images/blue-document.png'";
-		}
-		$res .= "}";
-		if (i+1 != count($files)) {
-			$res .= ",";
-		}
 	}
 
 	closedir($handle);

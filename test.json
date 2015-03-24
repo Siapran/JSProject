@@ -1,115 +1,115 @@
 {
 	'text': 'Calculatrice en javascript_files',
-	'icon': './images/blue-folder.png',
+	'icon': 'images/blue-folder.png',
 	'children': [{
 		'text': 'calculatrice.js',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'calculatrice.css',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}]
 }, {
 	'text': 'textEditor',
-	'icon': './images/blue-folder.png',
+	'icon': 'images/blue-folder.png',
 	'children': [{
 		'text': 'textEditor.html',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'textEditor.css',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'textEditor.js',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}]
 }, {
 	'text': 'bv.css',
-	'icon': './images/blue-document.png'
+	'icon': 'images/blue-document.png'
 }, {
 	'text': 'test.json',
-	'icon': './images/blue-document.png'
+	'icon': 'images/blue-document.png'
 }, {
 	'text': 'ajaxJSProjectGet.php',
-	'icon': './images/blue-document.png'
+	'icon': 'images/blue-document.png'
 }, {
 	'text': 'README.md',
-	'icon': './images/blue-document.png'
+	'icon': 'images/blue-document.png'
 }, {
 	'text': 'Calculatrice en javascript.html',
-	'icon': './images/blue-document.png'
+	'icon': 'images/blue-document.png'
 }, {
 	'text': 'jquery-ui.js',
-	'icon': './images/blue-document.png'
+	'icon': 'images/blue-document.png'
 }, {
 	'text': 'jquery-2.1.3.js',
-	'icon': './images/blue-document.png'
+	'icon': 'images/blue-document.png'
 }, {
 	'text': 'files.php',
-	'icon': './images/blue-document.png'
+	'icon': 'images/blue-document.png'
 }, {
 	'text': 'images',
-	'icon': './images/blue-folder.png',
+	'icon': 'images/blue-folder.png',
 	'children': [{
 		'text': 'edit-size-down.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'edit-list-order.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'edit-bold.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'blue-document-page-previous.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'edit-underline.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'blue-document-page-next.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'blue-document.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'blue-folder.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'edit-italic.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'edit-alignment-left.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'edit-alignment-justify.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'edit-list.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'edit-alignment-right.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'edit-alignment-center.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'edit-size-up.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'disk.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'blue-folder-open.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}, {
 		'text': 'edit-color.png',
-		'icon': './images/blue-document.png'
+		'icon': 'images/blue-document.png'
 	}]
 }, {
 	'text': 'bv.html',
-	'icon': './images/blue-document.png'
+	'icon': 'images/blue-document.png'
 }, {
 	'text': 'bv.js',
-	'icon': './images/blue-document.png'
+	'icon': 'images/blue-document.png'
 }, {
 	'text': 'ajaxJSProjectAdd.php',
-	'icon': './images/blue-document.png'
+	'icon': 'images/blue-document.png'
 }
