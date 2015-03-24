@@ -18,6 +18,8 @@ $(function() {
 		heightStyle: "fill"
 	})
 
+	size = 1;
+
 
 });
 
@@ -96,7 +98,16 @@ function doRichEditCommand(aName, aArg){
 }
 
 
-function putStyle(element) {
-	document.execCommand($(element).attr("id"));
+function putStyle(element, fontSizeStyle) {
+	if (typeof fontSizeStyle !== 'undefined') {
+		if (fontSizeStyle == "up")
+			size++;
+		else
+			size--;
+		if (size < 1) size = 1; else if (size > 7) size=7; 
+		document.execCommand($(element).attr("id"), false, size);
+	} else {
+		document.execCommand($(element).attr("id"));
+	}
 }
 
