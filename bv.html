@@ -8,6 +8,9 @@
 		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script src="bv.js"></script>
+		<script src="./Calculatrice en javascript_files/calculatrice.js"></script>
+        <link rel="stylesheet" type="text/css" href="./Calculatrice en javascript_files/calculatrice.css">
+
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body>
@@ -23,14 +26,70 @@
 					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 				</div>
 				<h3>Calculatrice</h3>
-				<div>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-				</div>
+				<div id="calculatrice">
+					    <div id="calc">
+							<div id="ligne_affichage" ondblclick="changePosition(this)">
+								<input type="text" name="zone_affichage" id="zone_affichage">
+					        </div>
+					        <div class="ligne_boutons">
+					                <input type="button" class="bouton_classique" value="MC" onclick="raz_memory()">
+					                <input id="MR" type="button" class="bouton_classique" value="MR" onclick="affiche_memory()">
+					                <input type="button" class="bouton_classique" value="MS" onclick="range_memory()">
+					                <input type="button" class="bouton_classique" value="+-">
+					                <input type="button" id="libre1" class="bouton_simple bouton_libre" value=" ">
+							</div>
+					        <div class="ligne_boutons">
+					                <input type="button" class="bouton_classique" value="CE" onclick="rab()">
+					                <input type="button" class="bouton_classique bouton_simple" value="(">
+					                <input type="button" class="bouton_classique bouton_simple" value=")">
+					                <input type="button" class="bouton_classique bouton_simple" value="/">
+					                <input type="button" id="libre2" class="bouton_simple bouton_libre" value=" ">
+					        </div>
+					  		<div class="ligne_boutons">
+					                <input type="button" class="bouton_classique bouton_simple" value="7">
+					                <input type="button" class="bouton_classique bouton_simple" value="8">
+					                <input type="button" class="bouton_classique bouton_simple" value="9">
+					                <input type="button" class="bouton_classique bouton_simple" value="*">
+					                <input type="button" id="libre3" class="bouton_simple bouton_libre" value=" ">
+							</div>
+							<div class="ligne_boutons">
+					                <input type="button" class="bouton_classique bouton_simple" value="4">
+					                <input type="button" class="bouton_classique bouton_simple" value="5">
+					                <input type="button" class="bouton_classique bouton_simple" value="6">
+					                <input type="button" class="bouton_classique bouton_simple" value="-">
+					                <input type="button" id="libre4" class="bouton_simple bouton_libre" value=" ">
+							</div>
+							<div class="ligne_boutons">
+					                <input type="button" class="bouton_classique bouton_simple" value="1">
+					                <input type="button" class="bouton_classique bouton_simple" value="2">
+					                <input type="button" class="bouton_classique bouton_simple" value="3">
+					                <input type="button" class="bouton_classique bouton_simple" value="+">
+					                <input type="button" id="libre5" class="bouton_simple bouton_libre" value=" ">
+							</div>
+					    	<div class="ligne_boutons">
+					                <input type="button" class="bouton_classique bouton_simple" value="0">
+					                <input id="E" type="button" class="bouton_classique" value="E" onclick="mode_edition(this)">
+					                <input type="button" class="bouton_classique bouton_simple" value=".">
+					                <input type="button" class="bouton_classique" value="=" onclick="calcul()">
+					                <input type="button" id="libre6" class="bouton_simple bouton_libre" value=" ">
+							</div>
+					        <strong>constantes et fonctions disponibles</strong> 
+							<span draggable="true" id="Math.abs" >Math.abs</span>,
+							<span draggable="true" id="Math.ceil" >Math.ceil</span>, 
+							<span draggable="true" id="Math.cos" >Math.cos</span>,
+							<span draggable="true" id="Math.E" >Math.E</span>,
+							<span draggable="true" id="Math.exp" >Math.exp</span>,
+							<span draggable="true" id="Math.floor" >Math.floor</span>,
+							<span draggable="true" id="Math.log" >Math.log</span>,
+							<span draggable="true" id="Math.max" >Math.max</span>,
+							<span draggable="true" id="Math.min" >Math.min</span>,
+							<span draggable="true" id="Math.PI" >Math.PI</span>,
+							<span draggable="true" id="Math.pow" >Math.pow</span>,
+							<span draggable="true" id="Math.round" >Math.round</span >,
+					        <span draggable="true" id="Math.sin" >Math.sin</span>,
+					        <span draggable="true" id="Math.sqrt" >Math.sqrt</span>
+						</div>
+					</div>
 				<h3>Calendrier</h3>
 				<div>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -63,20 +122,22 @@
 					<div class="title" contenteditable="true"><h1>Lorem ipsum</h1></div>
 					<div class="tools">
 						<ul class="listOfTools">
-							<li onclick="save(this)"><img src="images/disk.png"></li>
-							<li><img src="images/blue-document-page-next.png"></li>
-							<li><img src="images/blue-document-page-previous.png"></li>
-							<li><img src="images/edit-alignment-left.png"></li>
-							<li><img src="images/edit-alignment-center.png"></li>
-							<li><img src="images/edit-alignment-right.png"></li>
-							<li><img src="images/edit-italic.png"></li>
-							<li><img src="images/edit-bold.png"></li>
-							<li><img src="images/edit-underline.png"></li>
-							<li><img src="images/edit-list.png"></li>
-							<li><img src="images/edit-list-order.png"></li>
+							<li onclick="save(this)" id="save"><img src="images/disk.png"></li>
+							<li onclick="putStyle(this)" id="redo"><img src="images/blue-document-page-next.png"></li>
+							<li onclick="putStyle(this)" id="undo"><img src="images/blue-document-page-previous.png"></li>
+							<li onclick="putStyle(this)" id="justifyleft"><img src="images/edit-alignment-left.png"></li>
+							<li onclick="putStyle(this)" id="justifycenter"><img src="images/edit-alignment-center.png"></li>
+							<li onclick="putStyle(this)" id="justifyright"><img src="images/edit-alignment-right.png"></li>	
+							<li onclick="putStyle(this)" id="italic"><img src="images/edit-italic.png"></li>
+							<li onclick="putStyle(this)" id="bold"><img src="images/edit-bold.png"></li>
+							<li onclick="putStyle(this)" id="underline"><img src="images/edit-underline.png"></li>
+							<li onclick="putStyle(this)" id="InsertUnorderedList"><img src="images/edit-list.png"></li>
+							<li onclick="putStyle(this)" id="InsertOrderedList"><img src="images/edit-list-order.png"></li>
+							<li onclick="putStyle(this, 'down')" id="fontSize"><img src="images/edit-size-down.png"></li>
+							<li onclick="putStyle(this, 'up')" id="fontSize"><img src="images/edit-size-up.png"></li>
 						</ul>
 					</div>
-					<div id="content" class="content" contenteditable="true" onload="load(this)"><p>Lorem ipsum</p></div>
+					<div id="content" class="content" contenteditable="true" onload="load(this)">Lorem ipsum</div>
 				</div>
 <!-- 				<div id="tab2">
 					<p>Lel</p>

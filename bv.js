@@ -18,19 +18,9 @@ $(function() {
 		heightStyle: "fill"
 	})
 
-	  oDoc = document.getElementById("content");
+	size = 1;
 
 
-
-  var oContent = $("#content");
-    oContent = oContent.createTextNode(oDoc.innerHTML);
-    oDoc.innerHTML = "";
-    var oPre = document.createElement("pre");
-    oDoc.contentEditable = false;
-    oPre.id = "sourceText";
-    oPre.contentEditable = true;
-    oPre.appendChild(oContent);
-    oDoc.appendChild(oPre);
 });
 
 function save(element) {
@@ -105,5 +95,19 @@ function getIFrameDocument(aID){
 function doRichEditCommand(aName, aArg){
 	getIFrameDocument('editorWindow').execCommand(aName,false, aArg);
 	document.getElementById('editorWindow').contentWindow.focus()
+}
+
+
+function putStyle(element, fontSizeStyle) {
+	if (typeof fontSizeStyle !== 'undefined') {
+		if (fontSizeStyle == "up")
+			size++;
+		else
+			size--;
+		if (size < 1) size = 1; else if (size > 7) size=7; 
+		document.execCommand($(element).attr("id"), false, size);
+	} else {
+		document.execCommand($(element).attr("id"));
+	}
 }
 
