@@ -34,6 +34,22 @@ $(function() {
         }
     });
 
+
+    $('#tree')
+      // listen for event
+      .on('changed.jstree', function (e, data) {
+      	console.log("save");
+      })
+      .on('rename_node', function (e, data) {
+      	console.log("save");
+      })
+      .on('move_node', function (e, data) {
+      	console.log("save");
+      })
+      .on('remove_node', function (e, data) {
+      	console.log("save");
+      });
+
 	//font
 	size = 1;
 
