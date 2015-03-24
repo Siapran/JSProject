@@ -23,50 +23,60 @@ function delete_file($path) {
 
 /*function get_tree($dir) {
 	$handle = opendir($dir);
-
 	$res = "";
+	$file = readdir($handle);
 
-	while ($file = readdir($handle)) {
-		if ($file != "." && $file != "..") {
-			$res = "{";
-			$res .= "'text': '" . $file . "'";
+	while (false !== $file) {
+		if ($file[0] != ".") {
+			$res .= "{";
+			$res .= "'text': '".$file."'";
 			$path = $dir.'/'.$file;
 			if (is_dir($path)) {
 				$res .= ", 'icon': './images/blue-folder.png'";
-				$res .= ", 'children': [" . get_tree($path) . "]";
+				$res .= ", 'children': [".get_tree($path)."]";
 			} else {
 				$res .= ", 'icon': './images/blue-document.png'";
 			}
-			$res .= "},";
-		}
+			$res .= "}";
+			if (($file = readdir($handle)) !== false)
+				$res .= ",";
+		} else $file = readdir($handle);
 	}
+
 	closedir($handle);
 
 	return $res;
 }*/
 
+
 function get_tree($dir) {
 	$handle = opendir($dir);
+	$res = "";
+	
+	$files = glob($dir."[^.]*");
 
-	while ($file = readdir($handle)) {
-		if ($file[0] != ".") {
-			echo "{";
-			echo "'text': '" . $file . "'";
-			$path = $dir.'/'.$file;
-			if (is_dir($path)) {
-				echo ", 'icon': './images/blue-folder.png'";
-				echo ", 'children': [";
-				get_tree($path);
-				echo "]";
-			} else {
-				echo ", 'icon': './images/blue-document.png'";
-			}
-			echo "},";
+	for ($i=0; $i < count($files); $i++) { 
+		$file = $files[i];
+		$res .= "{";
+		$res .= "'text': '".$file."'";
+		$path = $dir.'/'.$file;
+		if (is_dir($path)) {
+			$res .= ", 'icon': './images/blue-folder.png'";
+			$res .= ", 'children': [".get_tree($path)."]";
+		} else {
+			$res .= ", 'icon': './images/blue-document.png'";
+		}
+		$res .= "}";
+		if (i+1 != count($files)) {
+			$res .= ",";
 		}
 	}
+
 	closedir($handle);
+
+	return $res;
 }
 
-get_tree(".");
+echo get_tree(".");
 
 ?>
