@@ -17,67 +17,38 @@ $(function() {
 	    });},
 		heightStyle: "fill"
 	});
-	// int i = -1; // va commencer à 0 avec l'incrémentation
+
+    $.ajax({
+        async : true,
+        type : "GET",
+        url : "./ajaxGetTree.php?dir=homeDir",
+        dataType : "json",    
+
+        success : function(json) {
+            $('#tree').jstree(json);
+        },    
+
+        error : function(xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+        }
+    });
 
 
-    // $.ajax({
-    //     async : true,
-    //     type : "GET",
-    //     url : "./test.json",
-    //     dataType : "json",    
-
-    //     success : function(json) {
-    //         createJSTrees(json);
-    //     },    
-
-    //     error : function(xhr, ajaxOptions, thrownError) {
-    //         alert(xhr.status);
-    //         alert(thrownError);
-    //     }
-    // });
-	var jsonData = {
-		"text": "textEditor",
-		"icon": "./images/blue-folder.png",
-		"children": [{
-			"text": "textEditor.html",
-			"icon": "./images/blue-document.png"
-		}, {
-			"text": "textEditor.css",
-			"icon": "./images/blue-document.png"
-		}, {
-			"text": "textEditor.js",
-			"icon": "./images/blue-document.png"
-		} ]
-	};
-	//createJSTrees(jsonData);
-
-
-	// function createJSTrees(jsonData) {
-	// 	console.log("hi");
-	//     $("#tree").jstree({
-	//         "json_data" : {
-	//             "data" : jsonData
-	//         },
-	//         // "plugins" : [ "themes", "json_data", "ui" ]
-	//     });
-	// }    
-
-	// $('#tree').jstree({
- //    'core' : {
- //        'data' : {
- //            'url' : './test.json',
- //            'data' : function (node) {
- //            	console.log(node);
- //                i++;
- //                return { 'id' : i, 'text': node.text,  };
-
- //            }
- //        }
- //    }});
-
-$('#tree').jstree({ 'core' : {
-    'data' : [ jsonData ]
-} });
+    $('#tree')
+      // listen for event
+      .on('changed.jstree', function (e, data) {
+      	console.log("save");
+      })
+      .on('rename_node', function (e, data) {
+      	console.log("save");
+      })
+      .on('move_node', function (e, data) {
+      	console.log("save");
+      })
+      .on('remove_node', function (e, data) {
+      	console.log("save");
+      });
 
 	//font
 	size = 1;
