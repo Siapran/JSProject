@@ -1,11 +1,11 @@
 <?php
 
-$f = fopen("./" . $_POST["path"] . "", "w");
-$fileJSProject = fopen(".jsprojectOpenedDocs", "w");
-fwrite($fileJSProject, $_POST["myOpenedDocs"]);
-fwrite($f, $_POST["myContent"]);
-echo "ok";
-header("Access-Control-Allow-Origin: *");
+	if (!file_exists(dirname("homeDir/" .$_POST["file"]))) {
+		mkdir(dirname("homeDir/" .$_POST["file"]), 0777, true);
+	}
+	$handle = fopen("homeDir/" . $_POST["file"], 'w') or die('Cannot open file:  '.$_POST["file"]);
+	fwrite($handle, $_POST["content"]);
+	fclose($handle);
 
 
 ?>
