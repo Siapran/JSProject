@@ -8,7 +8,7 @@ function get_tree($dir) {
 
 	while (($file = readdir($handle)) !== false)
 		if ($file[0] != ".")
-			if (is_dir($file))
+			if (is_dir($dir."/".$file))
 				$dirs[] = $file;
 			else
 				$files[] = $file;
@@ -41,8 +41,8 @@ function get_tree($dir) {
 
 echo "{ \"core\" : {
     \"data\" : [";
-// echo get_tree("..");
-echo get_tree($_GET["dir"]);
+echo get_tree("../../Work");
+// echo get_tree($_GET["dir"]);
 echo "]
 }," . "\"plugins\" : " . "[\"contextmenu\", \"sort\", \"dnd\", \"state\"] }";
 
