@@ -44,6 +44,6 @@ echo "{ \"core\" : {
 // echo get_tree("..");
 echo get_tree($_GET["dir"]);
 echo "]
-} }";
+}," . "\"plugins\" : " . "[\"contextmenu\", \"sort\", \"dnd\", \"state\"] }";
 
 ?>

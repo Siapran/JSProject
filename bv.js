@@ -26,6 +26,7 @@ $(function() {
 
         success : function(json) {
             $('#tree').jstree(json);
+            $("#tree").jstree({plugins: ["contextmenu"]});
         },    
 
         error : function(xhr, ajaxOptions, thrownError) {
@@ -38,18 +39,54 @@ $(function() {
     $('#tree')
       // listen for event
       .on('changed.jstree', function (e, data) {
-      	console.log("save");
-      })
-      .on('rename_node', function (e, data) {
-      	console.log("save");
-      })
-      .on('move_node', function (e, data) {
-      	console.log("save");
-      })
-      .on('remove_node', function (e, data) {
-      	console.log("save");
-      });
+      	console.log(data);
+      	if (data.action == "select_node") {
+			var path = data.instance.get_path(data.node,'/');
+	      	$.ajax({
+	      	    async : true,
+	      	    type : "POST",
+	      	    url : "./ajaxJSProjectGet.php?",
+	      	    data: {"file":path},
 
+	      	    success : function(contenuFichier) {
+	      	    	console.log(data);
+	      	    	// var elem = $(data)[0];
+	      	    	var li = $("<li/>");
+	      	    	$("<a/>").attr("href", "#tab" + encodeURIComponent(data.node.text)).text(data.node.text).appendTo(li); //data.node.text repréenste le titre du fichier
+	      	    	$("#listOfTabs").append(li);
+	      	    	// set all var of the document to add it after to the html page
+	      	    	var title = $("<h4/>").text("Title :").attr("class", "inline");
+	      	    	var titleEdit = $("<div/>").attr("class", "title").attr("contenteditable", "true").append($("<h1/>").text(data.node.text))
+	      	    	// list of buttons, there's no need to understand i just copied and past last html list
+	      	    	var tools = $("<div/>").attr("class", "tools").html('<ul class="listOfTools"><li onclick="save(this)"><img src="images/disk.png"></li><li><img src="images/blue-document-page-next.png"></li><li><img src="images/blue-document-page-previous.png"></li><li><img src="images/edit-alignment-left.png"></li><li><img src="images/edit-alignment-center.png"></li><li><img src="images/edit-alignment-right.png"></li><li><img src="images/edit-italic.png"></li><li><img src="images/edit-bold.png"></li><li><img src="images/edit-underline.png"></li><li><img src="images/edit-list.png"></li><li><img src="images/edit-list-order.png"></li></ul>');
+	      	    	var content = $("<div/>").attr("class", "content").attr("contenteditable", "true").text(contenuFichier);
+	      	    	$("#tabs").append($("<div/>").attr("id", "tab" + encodeURIComponent(data.node.text)).append(title).append(titleEdit).append(tools).append(content));
+	      	    	var tabs = $( "#tabs" ).tabs();
+	      	    	var ul = tabs.find( "ul#listOfTabs" );
+	      	    	$( "<li><a href='#newtab'>New Tab</a></li>" ).appendTo( ul );
+	      	    	$( "<div id='newtab'><p></p></div>" ).appendTo( tabs );
+	      	    	tabs.tabs( "refresh" );
+      	    		$("#tabs").tabs("refresh");
+	      	    },    
+
+	      	    error : function(xhr, ajaxOptions, thrownError) {
+	      	        alert(xhr.status);
+	      	        alert(thrownError);
+	      	    }
+	      	});
+      	}
+		
+      	console.log("changed.jstree");
+      });
+      $('#tree').on('rename_node', function (e, data) {
+      	console.log("rename_node");
+      });
+      $('#tree').on('move_node', function (e, data) {
+      	console.log("move_node");
+      });
+      $('#tree').on('remove_node', function (e, data) {
+      	console.log("remove_node");
+      });
 	//font
 	size = 1;
 
