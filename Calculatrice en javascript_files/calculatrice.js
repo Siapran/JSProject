@@ -131,58 +131,58 @@ function save(objet) {
 
 
 
-// document.addEventListener("dragstart", function(event) {
-//     // The dataTransfer.setData() method sets the data type and the value of the dragged data
-//     event.dataTransfer.setData("Text", event.target.id);
+document.addEventListener("dragstart", function(event) {
+    // The dataTransfer.setData() method sets the data type and the value of the dragged data
+    event.dataTransfer.setData("Text", event.target.id);
     
-//     // Output some text when starting to drag the p element
-//     document.getElementById("demo").innerHTML = "Started to drag the p element.";
+    // Output some text when starting to drag the p element
+    document.getElementById("demo").innerHTML = "Started to drag the p element.";
     
-//     // Change the opacity of the draggable element
-//     event.target.style.opacity = "0.4";
-// });
+    // Change the opacity of the draggable element
+    event.target.style.opacity = "0.4";
+});
 
-// // Output some text when finished dragging the p element and reset the opacity
-// document.addEventListener("dragend", function(event) {
-//     document.getElementById("demo").innerHTML = "Finished dragging the p element.";
-//     event.target.style.opacity = "1";
-// });
+// Output some text when finished dragging the p element and reset the opacity
+document.addEventListener("dragend", function(event) {
+    document.getElementById("demo").innerHTML = "Finished dragging the p element.";
+    event.target.style.opacity = "1";
+});
 
 
-// /* Events fired on the drop target */
+/* Events fired on the drop target */
 
-// // When the draggable p element enters the bouton_libre, change the DIVS's border style
-// document.addEventListener("dragenter", function(event) {
-//     if ( event.target.className == "bouton_libre" ) {
-//         event.target.style.border = "3px dotted red";
-//     }
-// });
+// When the draggable p element enters the bouton_libre, change the DIVS's border style
+document.addEventListener("dragenter", function(event) {
+    if ( event.target.className == "bouton_libre" ) {
+        event.target.style.border = "3px dotted red";
+    }
+});
 
-// // By default, data/elements cannot be dropped in other elements. To allow a drop, we must prevent the default handling of the element
-// document.addEventListener("dragover", function(event) {
-//     event.preventDefault();
-// });
+// By default, data/elements cannot be dropped in other elements. To allow a drop, we must prevent the default handling of the element
+document.addEventListener("dragover", function(event) {
+    event.preventDefault();
+});
 
-// // When the draggable p element leaves the bouton_libre, reset the DIVS's border style
-// document.addEventListener("dragleave", function(event) {
-//     if ( event.target.className == "bouton_libre" ) {
-//         event.target.style.border = "";
-//     }
-// });
+// When the draggable p element leaves the bouton_libre, reset the DIVS's border style
+document.addEventListener("dragleave", function(event) {
+    if ( event.target.className == "bouton_libre" ) {
+        event.target.style.border = "";
+    }
+});
 
-// /* On drop - Prevent the browser default handling of the data (default is open as link on drop)
-//    Reset the color of the output text and DIV's border color
-//    Get the dragged data with the dataTransfer.getData() method
-//    The dragged data is the id of the dragged element ("drag1")
-//    Append the dragged element into the drop element
-// */
-// document.addEventListener("drop", function(event) {
-//     event.preventDefault();
-//     console.log(event.target);
-//     if ( event.target.className == "bouton_simple bouton_libre") {
-//     	console.log(event);
-//         var data = event.dataTransfer.getData("Text");
-//         event.target.setAttribute("value",document.getElementById(data).id);
-//     }
-//     save(event.target);
-// });
+/* On drop - Prevent the browser default handling of the data (default is open as link on drop)
+   Reset the color of the output text and DIV's border color
+   Get the dragged data with the dataTransfer.getData() method
+   The dragged data is the id of the dragged element ("drag1")
+   Append the dragged element into the drop element
+*/
+document.addEventListener("drop", function(event) {
+    event.preventDefault();
+    console.log(event.target);
+    if ( event.target.className == "bouton_simple bouton_libre") {
+    	console.log(event);
+        var data = event.dataTransfer.getData("Text");
+        event.target.setAttribute("value",document.getElementById(data).id);
+    }
+    save(event.target);
+});

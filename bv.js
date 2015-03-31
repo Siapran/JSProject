@@ -49,24 +49,19 @@ $(function() {
 	      	    data: {"file":path},
 
 	      	    success : function(contenuFichier) {
-	      	    	console.log(data);
-	      	    	// var elem = $(data)[0];
-	      	    	var li = $("<li/>");
-	      	    	$("<a/>").attr("href", "#tab" + encodeURIComponent(data.node.text)).text(data.node.text).appendTo(li); //data.node.text repréenste le titre du fichier
-	      	    	$("#listOfTabs").append(li);
-	      	    	// set all var of the document to add it after to the html page
-	      	    	var title = $("<h4/>").text("Title :").attr("class", "inline");
-	      	    	var titleEdit = $("<div/>").attr("class", "title").attr("contenteditable", "true").append($("<h1/>").text(data.node.text))
-	      	    	// list of buttons, there's no need to understand i just copied and past last html list
 	      	    	var tools = $("<div/>").attr("class", "tools").html('<ul class="listOfTools"><li onclick="save(this)"><img src="images/disk.png"></li><li><img src="images/blue-document-page-next.png"></li><li><img src="images/blue-document-page-previous.png"></li><li><img src="images/edit-alignment-left.png"></li><li><img src="images/edit-alignment-center.png"></li><li><img src="images/edit-alignment-right.png"></li><li><img src="images/edit-italic.png"></li><li><img src="images/edit-bold.png"></li><li><img src="images/edit-underline.png"></li><li><img src="images/edit-list.png"></li><li><img src="images/edit-list-order.png"></li></ul>');
 	      	    	var content = $("<div/>").attr("class", "content").attr("contenteditable", "true").text(contenuFichier);
-	      	    	$("#tabs").append($("<div/>").attr("id", "tab" + encodeURIComponent(data.node.text)).append(title).append(titleEdit).append(tools).append(content));
-	      	    	var tabs = $( "#tabs" ).tabs();
-	      	    	var ul = tabs.find( "ul#listOfTabs" );
-	      	    	$( "<li><a href='#newtab'>New Tab</a></li>" ).appendTo( ul );
-	      	    	$( "<div id='newtab'><p></p></div>" ).appendTo( tabs );
-	      	    	tabs.tabs( "refresh" );
-      	    		$("#tabs").tabs("refresh");
+    		        var num_tabs = $("div#tabs ul#listOfTabs li").length + 1;
+    		        $("div#tabs ul#listOfTabs").append("<li><a href='#tab" + num_tabs + "'>" + data.node.text + "</a></li>");
+    				$("div#tabs").append("<div id='tab" + num_tabs + "'><h4 class='inline'>Title : </h4><div class='title' id='titleEditable' contenteditable='true'>" + data.node.text + "</div>" + "</div>");
+    		        $("div#tabs").tabs("refresh");
+    		        $("div#tab" + num_tabs).append(tools);
+    		        $("div#tab" + num_tabs).append(content);
+    		        $( "div#tabs" ).tabs( "option", "active", $("div#tabs ul#listOfTabs li").length-1);
+
+
+
+
 	      	    },    
 
 	      	    error : function(xhr, ajaxOptions, thrownError) {
