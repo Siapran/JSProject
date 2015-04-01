@@ -7,6 +7,10 @@
 	padding:15px;
 }
 
+#calc span, #calc strong {
+	color:black;
+}
+
 #titre
 {
 	font-weight: bold;
