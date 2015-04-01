@@ -33,6 +33,8 @@ $(function() {
         }
     });
 
+	$("#datepicker").datepicker();
+
 
     $('#tree')
       // listen for event
