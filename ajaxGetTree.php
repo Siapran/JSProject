@@ -39,12 +39,12 @@ function get_tree($dir) {
 	return $res;
 }
 
-echo "{ \"core\" : {
+// echo "{ \"core\" : {
     \"data\" : [";
-// echo get_tree("../../Work");
+// echo get_tree("homeDir");
 echo get_tree($_GET["dir"]);
-echo "]
+echo "]"
 
-}," . "\"plugins\" : " . "[\"contextmenu\", \"sort\", \"dnd\", \"state\"] }";
+// echo "}," . "\"plugins\" : " . "[\"contextmenu\", \"sort\", \"dnd\", \"state\"] }";
 
 ?>
