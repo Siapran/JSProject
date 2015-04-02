@@ -1,6 +1,54 @@
-// création du menu contextuel ouvert sur clic droit
+
+
+$(function() {
+
+
+    $.ajaxSetup({cache : false});
+
+    $("#accordion").accordion({
+        heightStyle: "fill"
+    });
+
+    $("#tabs").tabs({
+        beforeLoad: function(event, ui) {
+            if (ui.tab.data("loaded")) {
+                event.preventDefault();
+                return;
+            }
+            ui.ajaxSettings.cache = false,
+                ui.jqXHR.success(function() {
+                    ui.tab.data("loaded", true);
+                });
+        },
+        heightStyle: "fill"
+    });
+
+    $.ajax({
+        async: true,
+        type: "GET",
+        url: "./ajaxGetTree.php?dir=homeDir",
+        dataType: "json",
+
+        success: function(json) {
+            $('#tree').jstree(json);
+            $("#tree").jstree({
+                "contextmenu": {
+                    "items": createmenu
+                }
+            });
+        },
+
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+        }
+    });
+
+    // création du menu contextuel ouvert sur clic droit
 function createmenu(node) {
     var tree = $("#tree").jstree(true);
+    console.log("createmenu");
+    alert("ok");
     return {
         "item1": {
             "label": "Nouveau Répertoire",
@@ -35,47 +83,6 @@ function createmenu(node) {
         }
     };
 }
-
-$(function() {
-    $("#accordion").accordion({
-        heightStyle: "fill"
-    });
-
-    $("#tabs").tabs({
-        beforeLoad: function(event, ui) {
-            if (ui.tab.data("loaded")) {
-                event.preventDefault();
-                return;
-            }
-            ui.ajaxSettings.cache = false,
-                ui.jqXHR.success(function() {
-                    ui.tab.data("loaded", true);
-                });
-        },
-        heightStyle: "fill"
-    });
-
-    $.ajax({
-        async: true,
-        type: "GET",
-        url: "./ajaxGetTree.php?dir=homeDir",
-        dataType: "json",
-
-        success: function(json) {
-            $('#tree').jstree(json);
-            $("#tree").jstree({
-                "plugins": ["contextmenu"],
-                "contextmenu": {
-                    "items": createmenu
-                }
-            });
-        },
-
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
-            alert(thrownError);
-        }
-    });
 
     $("#datepicker").datepicker();
 
@@ -122,7 +129,6 @@ $(function() {
                     }
                 })
                 if (!alreadyThere && data.node.icon !== "images/blue-folder.png") {
-                    console.log($(this));
                     var tools = $("<div/>").attr("class", "tools").html('<ul class="listOfTools"><li onclick="saveDoc(this)"><img src="images/disk.png"></li><li><img src="images/blue-document-page-next.png"></li><li><img src="images/blue-document-page-previous.png"></li><li><img src="images/edit-alignment-left.png"></li><li><img src="images/edit-alignment-center.png"></li><li><img src="images/edit-alignment-right.png"></li><li><img src="images/edit-italic.png"></li><li><img src="images/edit-bold.png"></li><li><img src="images/edit-underline.png"></li><li><img src="images/edit-list.png"></li><li><img src="images/edit-list-order.png"></li></ul>');
                     var content = $("<div/>").attr("class", "content").attr("contenteditable", "true").text(contenuFichier);
                     var num_tabs = $("div#tabs ul#listOfTabs li").length + 1;

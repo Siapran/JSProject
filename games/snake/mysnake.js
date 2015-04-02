@@ -1,15 +1,13 @@
 console.log($("#canvas"));
 
 $(document).ready(function() {
-
-
 	//Objets et globales :
 
 	var snake = {	size:5,
 					snake_array:new Array(),
 					create : function() {
 						this.snake_array = new Array();
-						for(var i = 0; i <= 4; i++) {
+						for(var i = 0; i <= size; i++) {
 							this.snake_array.push({x: i, y:0});
 						}
 					},
