@@ -26,7 +26,10 @@ $(function() {
         success: function(json) {
             $('#tree').jstree(json);
             $("#tree").jstree({
-                plugins: ["contextmenu"]
+                plugins: ["contextmenu"],
+                "contextmenu": {
+                    "items": createMenu
+                }
             });
         },
 
@@ -152,4 +155,42 @@ function putStyle(element, fontSizeStyle) {
     } else {
         document.execCommand($(element).attr("id"));
     }
+}
+
+// création du menu contextuel ouvert sur clic droit
+function createMenu(node) {
+    var tree = $("#tree").jstree(true);
+    return {
+        "item1": {
+            "label": "Nouveau Répertoire",
+            "action": function() {
+                node = tree.create_node(node);
+                tree.edit(node);
+            }
+        },
+
+        "item2": {
+            "label": "Nouveau Document",
+            "action": function() {
+                node = tree.create_node(node, {
+                    "type": "file"
+                });
+                tree.edit(node);
+            }
+        },
+
+        "item3": {
+            "label": "Renommer",
+            "action": function(obj) {
+                tree.edit(node);
+            }
+        },
+
+        "item4": {
+            "label": "Supprimer",
+            "action": function(obj) {
+                tree.delete_node(node);
+            }
+        }
+    };
 }
