@@ -1,7 +1,9 @@
 <?php
 $f = fopen("./homeDir/" . $_POST["file"] , "r");
-$data = fread($f, filesize(("./homeDir/" . $_POST["file"])));
+if (filesize("./homeDir/" . $_POST["file"]) > 0) {
+	$data = fread($f, );
 
-echo $data;
+	echo $data;
+}
 
 ?>
