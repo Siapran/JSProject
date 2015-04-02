@@ -29,7 +29,11 @@ $(document).ready(function() {
 			};
 		},
 		deplacer: function(d) {
-			var temp = this.snake_array[0];
+			// var temp = this.snake_array[0];
+			var temp = {
+				x: this.snake_array[0].x,
+				y: this.snake_array[0].y
+			};
 			if (d == "right") temp.x++;
 			else if (d == "left") temp.x--;
 			else if (d == "up") temp.y--;
@@ -131,7 +135,7 @@ $(document).ready(function() {
 	// renvoie vrai si une case de l'array est la même que la case(x,y)
 	// typiquement on appliquera cette fonction sur la tête du serpent avec le serpent
 	function check_collision(x, y, array) {
-		for (var i = 1; i < array.length; i++) {
+		for (var i = 0; i < array.length; i++) {
 			// console.log(x + " = " + array[i].x);
 			// console.log(y + " = " + array[i].y);
 
