@@ -1,11 +1,9 @@
 <?php
 
-	$path = "homeDir/" . $_POST["file"]
-
-	if (!file_exists(dirname($path))) {
-		mkdir(dirname($path), 0777, true);
+	if (!file_exists(dirname("homeDir/" .$_POST["file"]))) {
+		mkdir(dirname("homeDir/" .$_POST["file"]), 0777, true);
 	}
-	$handle = fopen($path, 'w') or die('Cannot open file:  '.$path);
+	$handle = fopen("homeDir/" . $_POST["file"], 'w') or die('Cannot open file:  '.$_POST["file"]);
 	fwrite($handle, $_POST["content"]);
 	fclose($handle);
 
