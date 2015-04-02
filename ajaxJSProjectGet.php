@@ -1,9 +1,7 @@
 <?php
-	$path = "./homeDir/" . $_POST["file"];
+$f = fopen("./homeDir/" . $_POST["file"] , "r");
+$data = fread($f, filesize(("./homeDir/" . $_POST["file"])));
 
-	$handle = fopen($path, 'r');
-	$data = fread($handle, filesize($path));
-	fclose($handle);
+echo $data;
 
-	echo $data;
 ?>
