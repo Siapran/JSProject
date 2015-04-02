@@ -39,10 +39,9 @@ function get_tree($dir) {
 	return $res;
 }
 
-echo "{ \"core\" : {
-     \"data\" : [";
-echo get_tree($_GET["dir"]);
-echo "]
+$handle = fopen("root.json", 'w') or die('Cannot open file:  root.json');
+fwrite($handle, "[" . get_tree($_GET["dir"]) . "]");
+fclose($handle);
+echo "ok";
 
- }," . "\"plugins\" : " . "[\"contextmenu\", \"sort\", \"dnd\", \"state\"] }";
 ?>

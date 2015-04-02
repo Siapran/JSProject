@@ -23,89 +23,154 @@ $(function() {
         heightStyle: "fill"
     });
 
-    $.ajax({
-        async: true,
-        type: "GET",
-        url: "./ajaxGetTree.php?dir=homeDir",
-        dataType: "json",
 
-        success: function(json) {
-            $('#tree').jstree(json);
-            $("#tree").jstree({
-                "contextmenu": {
-                    "items": createmenu
-                }
-            });
-        },
+// création du menu contextuel ouvert sur clic droit
+    function createmenu(node) 
+    {
+        var tree = $("#tree").jstree(true);
+        return {
+                    "item1": 
+                    {
+                        "label": "Créer répertoire",
+                        "action":function () 
+                        { 
+                            node = tree.create_node(node);
+                            tree.edit(node);
+                            var path = $("#tree").jstree(true).get_path(node, '/');
+                            $.ajax({
+                                async: true,
+                                type: "POST",
+                                url: "./ajaxJSProjectAddRepository.php",
+                                data: {
+                                    "dirname": path
+                                },
 
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
-            alert(thrownError);
-        }
-    });
+                                success: function(response) {
+                                    console.log(response);
+                                }
+                            })
+                        }
+                    },
 
-    // création du menu contextuel ouvert sur clic droit
-function createmenu(node) {
-    var tree = $("#tree").jstree(true);
-    console.log("createmenu");
-    alert("ok");
-    return {
-        "item1": {
-            "label": "Nouveau Répertoire",
-            "action": function() {
-                node = tree.create_node(node);
-                tree.edit(node);
-            }
-        },
+                    "item2": 
+                    {
+                        "label": "Créer fichier",
+                        "action": function () 
+                        { 
+                             node = tree.create_node(node,{"type":"file"});
+                              tree.edit(node);
 
-        "item2": {
-            "label": "Nouveau Document",
-            "action": function() {
-                node = tree.create_node(node, {
-                    "type": "file"
-                });
-                tree.edit(node);
-            }
-        },
+                        }
+                    },
+                          
+                    "item3": 
+                    {
+                        "label": "Renommer fichier",
+                        "action": function (obj) 
+                        { 
+                            oldpath = $("#tree").jstree(true).get_path(node, '/');
+                            tree.edit(node);
+                        }
+                    },                         
+                                                    
+                    "item4": 
+                    {
+                        "label": "Supprimer",
+                        "action": function (obj)
+                        { 
+                            var path = $("#tree").jstree(true).get_path(node, '/');
+                            tree.delete_node(node);
+                            $.ajax({
+                                async: true,
+                                type: "POST",
+                                url: "./ajaxJSProjectDelete.php",
+                                data: {
+                                    "path": path
+                                },
 
-        "item3": {
-            "label": "Renommer",
-            "action": function(obj) {
-                tree.edit(node);
-            }
-        },
+                                success: function(response) {
+                                    console.log(response);
+                                    saveArborescence();
 
-        "item4": {
-            "label": "Supprimer",
-            "action": function(obj) {
-                tree.delete_node(node);
-            }
-        }
-    };
-}
+                                }
+                            })
+                        }
+                    }
+                };
+    }
+
+
+    function init()
+    {
+        // initialisation de l'arbre
+        $('#tree').jstree({
+                    'core' : {
+                            "animation" : 0,
+                            "check_callback" : true,
+                            "themes" : { "stripes" : true }, 
+                            'data' : {"url" : "./root.json", "dataType" : "json" }// needed only if you do not supply JSON headers
+                              },
+                    "types" : {
+                                "#" : { "max_children" : 1, "max_depth" : 4, "valid_children" : ["root"] }
+                                },
+                    "plugins" : [ "contextmenu", "dnd", "state", "types", "wholerow"],
+                    "contextmenu":{ "items": createmenu}
+                  });
+    }
+    saveArborescence();
+    init();
 
     $("#datepicker").datepicker();
 
 
-    $('#tree')
-        // listen for event
-        .on('changed.jstree', function(e, data) {});
-    $('#tree').on('rename_node', function(e, data) {
+    $('#tree').on('rename_node.jstree', function(e, data) {
         console.log("rename_node");
-        console.log(data);
-        console.log(data.node.type);
+        var newpath = $("#tree").jstree(true).get_path(data.node, '/');
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "./ajaxJSProjectRename.php",
+            data: {
+                "oldpath": oldpath,
+                "newpath": newpath
+            },
 
-        var path = data.instance.get_path(data.node, '/');
+            success: function(response) {
+                console.log(response);
+                saveArborescence();
 
+            }
+        })
         
     });
-    $('#tree').on('move_node', function(e, data) {
+    $('#tree').on('move_node.jstree', function(e, data) {
         console.log("move_node");
     });
-    $('#tree').on('delete_node', function(e, data) {
-        console.log("delete_node");
-        $('#tree').delete_node(data.node);
+
+    $('#tree').on('create_node.jstree', function(e, data) {
+        console.log("createnode.jstree");
+        var path = $("#tree").jstree(true).get_path(data.node, '/');
+        oldpath = path;
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "./ajaxJSProjectAdd.php",
+            data: {
+                "file": path,
+                "content": ""
+            },
+
+            success: function(response) {
+                console.log(response);
+                saveArborescence();
+            }
+        })
     });
+
+
+
+
+    //Ouverture d'un tab
     $('#tree').on('select_node.jstree', function(e, data) {
         console.log("select_node");
         console.log(data);
@@ -129,7 +194,7 @@ function createmenu(node) {
                     }
                 })
                 if (!alreadyThere && data.node.icon !== "images/blue-folder.png") {
-                    var tools = $("<div/>").attr("class", "tools").html('<ul class="listOfTools"><li onclick="saveDoc(this)"><img src="images/disk.png"></li><li><img src="images/blue-document-page-next.png"></li><li><img src="images/blue-document-page-previous.png"></li><li><img src="images/edit-alignment-left.png"></li><li><img src="images/edit-alignment-center.png"></li><li><img src="images/edit-alignment-right.png"></li><li><img src="images/edit-italic.png"></li><li><img src="images/edit-bold.png"></li><li><img src="images/edit-underline.png"></li><li><img src="images/edit-list.png"></li><li><img src="images/edit-list-order.png"></li></ul>');
+                    var tools = $("<div/>").attr("class", "tools").html('<ul class="listOfTools"><li onclick="saveDoc(this)"><img src="images/disk.png"></li><li onclick="putStyle(this)"><img src="images/blue-document-page-next.png"></li><li><img src="images/blue-document-page-previous.png"></li><li><img src="images/edit-alignment-left.png"></li><li onclick="putStyle(this)"><img src="images/edit-alignment-center.png"></li><li><img src="images/edit-alignment-right.png"></li><li><img src="images/edit-italic.png"></li><li><img src="images/edit-bold.png"></li><li><img src="images/edit-underline.png"></li><li><img src="images/edit-list.png"></li><li><img src="images/edit-list-order.png"></li></ul>');
                     var content = $("<div/>").attr("class", "content").attr("contenteditable", "true").text(contenuFichier);
                     var num_tabs = $("div#tabs ul#listOfTabs li").length + 1;
                     $("div#tabs ul#listOfTabs").append("<li><a href='#tab" + num_tabs + "'>" + data.node.text + "</a></li>");
@@ -156,6 +221,26 @@ function createmenu(node) {
 
 });
 
+
+//On enregistre l'arborescence
+function saveArborescence() {
+    $.ajax({
+        async: true,
+        type: "GET",
+        url: "./updateTree.php?dir=homeDir",
+
+        success: function(response) {
+            console.log(response);
+        },
+
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+        }
+    });
+}
+
+
 function saveDoc(element) {
     var tab = $(element).parent().parent().parent();
     var title = "";
@@ -179,6 +264,12 @@ function saveDoc(element) {
         });
 }
 
+
+
+
+
+
+
 function load(element) {
     (element).designMode = "On";
 }
@@ -194,6 +285,7 @@ function doRichEditCommand(aName, aArg) {
 
 
 function putStyle(element, fontSizeStyle) {
+    console.log("putsytle")
     if (typeof fontSizeStyle !== 'undefined') {
         if (fontSizeStyle == "up")
             size++;
