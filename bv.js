@@ -1,5 +1,5 @@
 // création du menu contextuel ouvert sur clic droit
-function createMenu(node) {
+function createmenu(node) {
     var tree = $("#tree").jstree(true);
     return {
         "item1": {
@@ -66,7 +66,7 @@ $(function() {
             $("#tree").jstree({
                 "plugins": ["contextmenu"],
                 "contextmenu": {
-                    "items": createMenu
+                    "items": createmenu
                 }
             });
         },
