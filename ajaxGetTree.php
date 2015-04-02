@@ -43,8 +43,7 @@ function get_tree($dir) {
     \"data\" : [";
 // echo get_tree("homeDir");
 echo get_tree($_GET["dir"]);
-echo "]"
-
-// echo "}," . "\"plugins\" : " . "[\"contextmenu\", \"sort\", \"dnd\", \"state\"] }";
+echo "]
+}}";
 
 ?>

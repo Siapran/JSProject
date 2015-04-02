@@ -1,9 +1,8 @@
 console.log($("#canvas"));
 
 $(document).ready(function() {
-
-
 	//Objets et globales :
+
 
 	var snake = {
 		size: 5,
