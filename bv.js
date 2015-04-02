@@ -26,7 +26,7 @@ $(function() {
         success: function(json) {
             $('#tree').jstree(json);
             $("#tree").jstree({
-                plugins: ["contextmenu"],
+                "plugins": ["contextmenu"],
                 "contextmenu": {
                     "items": createMenu
                 }
