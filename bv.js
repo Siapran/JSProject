@@ -47,6 +47,12 @@ $(function() {
         .on('changed.jstree', function(e, data) {});
     $('#tree').on('rename_node', function(e, data) {
         console.log("rename_node");
+        console.log(data);
+        console.log(data.node.type);
+
+        var path = data.instance.get_path(data.node, '/');
+
+        
     });
     $('#tree').on('move_node', function(e, data) {
         console.log("move_node");

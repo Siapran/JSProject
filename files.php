@@ -21,4 +21,8 @@ function delete_file($path) {
 	unlink($path);
 }
 
+function rename_file($path, $newpath) {
+	rename($path, $newpath);
+}
+
 ?>
