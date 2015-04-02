@@ -29,11 +29,14 @@ $(document).ready(function() {
 			};
 		},
 		deplacer: function(d) {
+
+			// temp est une COPIE de la tête du serpent
 			// var temp = this.snake_array[0];
 			var temp = {
 				x: this.snake_array[0].x,
 				y: this.snake_array[0].y
 			};
+
 			if (d == "right") temp.x++;
 			else if (d == "left") temp.x--;
 			else if (d == "up") temp.y--;
