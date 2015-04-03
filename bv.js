@@ -163,6 +163,27 @@ $(function() {
     });
     $('#tree').on('move_node.jstree', function(e, data) {
         console.log("move_node");
+
+        var newpath = $("#tree").jstree(true).get_path(data.node, '/');
+        var filename = newpath.replace(/^.*[\\\/]/, '');
+        oldpath = data.old_parent + filename;
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "./ajaxJSProjectRename.php",
+            data: {
+                "oldpath": oldpath,
+                "newpath": newpath
+            },
+
+            success: function(response) {
+                console.log(response);
+                saveArborescence();
+
+            }
+        })
+
     });
 
     $('#tree').on('create_node.jstree', function(e, data) {
