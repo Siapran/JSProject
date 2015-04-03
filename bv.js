@@ -141,6 +141,10 @@ $(function() {
     $('#tree').on('rename_node.jstree', function(e, data) {
         console.log("rename_node");
         var newpath = $("#tree").jstree(true).get_path(data.node, '/');
+
+        console.log(oldpath);
+        console.log(newpath);
+
         $.ajax({
             async: true,
             type: "POST",
