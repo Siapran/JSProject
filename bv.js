@@ -69,26 +69,15 @@ $(function() {
 
                     var path = $("#tree").jstree(true).get_path(node, '/');
                     tree.delete_node(node);
+                    $("div#tabs ul#listOfTabs li").each(function(index) {
+                        if ($(this).children().text() == node.text) {
+                            var panelId = $(this).remove().attr( "aria-controls" );
+                            $( "#" + panelId ).remove();
+                            $("div#tabs").tabs("refresh");
+                        }
+                    })
 
 
-                    //Delete tab
-/*                    $(function() {
-                        var $tabs = $("#tabs");
-                        var offst = 0;
-                        $('#tabs ul#listOfTabs li a').each(function(index, elem) {
-                            if ($(this).text() == node.text) {
-                                tabs.tabs().delegate("span.ui-icon-close", "click", function() {
-                                    var panelId = $(this).closest("li").remove().attr("aria-controls");
-                                    $("#" + panelId).remove();
-                                    tabs.tabs("refresh");
-                                });
-                            }
-
-                            console.log($(this).text());
-                            console.log(node.text);
-                        });
-                    });
-*/                  console.log("TYPE = " + node.type);
                     $.ajax({
                         async: true,
                         type: "POST",
@@ -180,7 +169,6 @@ $(function() {
         oldpath = $("#tree").jstree(true).get_node(data.old_parent).text + filename;
         console.log("OLD PARENT = ");
         console.log(data.instance.get_path($("#tree").jstree(true).get_node(data.old_parent), '/'));
-console.log("=======")
         oldpath = data.instance.get_path($("#tree").jstree(true).get_node(data.old_parent), '/');
         console.log(newpath);
 
