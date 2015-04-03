@@ -165,8 +165,7 @@ $(function() {
 
         var path = $("#tree").jstree(true).get_path(data.node, '/');
 
-
-        if (data.node.type == file) {
+        if (data.node.type == "file") {
             // fichier
             oldpath = path;
             $.ajax({
