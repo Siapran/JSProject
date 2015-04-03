@@ -9,17 +9,17 @@ $(document).ready(function() {
 		snake_array: new Array(),
 		create: function() {
 			this.snake_array = new Array();
-			for (var i = 0; i <= 4; i++) {
-				this.snake_array.push({
-					x: i,
+			for (var i = 0; i < 3; ++i) {
+				this.snake_array[i] = {
+					x: 3 - i,
 					y: 0
-				});
+				};
 			}
 		},
 		getSnakeHead: function() {
 			return {
-				x: snake.snake_array[0].x,
-				y: snake.snake_array[0].y
+				x: this.snake_array[0].x,
+				y: this.snake_array[0].y
 			};
 		},
 		draw: function() {
@@ -31,10 +31,7 @@ $(document).ready(function() {
 
 			// temp est une COPIE de la tête du serpent
 			// var temp = this.snake_array[0];
-			var temp = {
-				x: this.snake_array[0].x,
-				y: this.snake_array[0].y
-			};
+			var temp = this.getSnakeHead();
 
 			if (d == "right") temp.x++;
 			else if (d == "left") temp.x--;
@@ -46,14 +43,13 @@ $(document).ready(function() {
 			//									soit la width ou la length
 			// || check_collision(temp.x, temp.y, this.snake_array)
 			if (check_collision(temp.x, temp.y, this.snake_array)) {
-				console.log("hey");
-			}
-			if (temp.x == -1 || temp.x == canvas.width / sizeOfRectangle || temp.y == -1 || temp.y == canvas.height / sizeOfRectangle) {
+				game.restart();
+			} else if (temp.x == -1 || temp.x == canvas.width / sizeOfRectangle || temp.y == -1 || temp.y == canvas.height / sizeOfRectangle) {
 				game.restart();
 			} else {
 				//Cas ou le serpent mange la nourriture
 				if (temp.x == game.food.x && temp.y == game.food.y) {
-					//on récupère la tête du serpent EN PRENANT EN COMPTE LES MODIFICATIONS EVENMENETIEL
+					//on récupère la tête du serpent EN PRENANT EN COMPTE LES MODIFICATIONS EVENMENETIELLES
 					var tail = {
 						x: temp.x,
 						y: temp.y
@@ -103,7 +99,7 @@ $(document).ready(function() {
 			game.createFood();
 			play();
 		},
-		d: "right", // par défault on fait partir le snake vers le bas
+		d: "right", // par défault on fait partir le snake vers la droite
 		score: 0 // par défaut score de 0
 	}
 
@@ -138,8 +134,6 @@ $(document).ready(function() {
 	// typiquement on appliquera cette fonction sur la tête du serpent avec le serpent
 	function check_collision(x, y, array) {
 		for (var i = 0; i < array.length; i++) {
-			// console.log(x + " = " + array[i].x);
-			// console.log(y + " = " + array[i].y);
 
 			if (array[i].x == x && array[i].y == y)
 				return true;
