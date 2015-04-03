@@ -55,6 +55,7 @@ $(function() {
                 "label": "Renommer fichier",
                 "action": function(obj) {
                     oldpath = $("#tree").jstree(true).get_path(node, '/');
+                    console.log(oldpath);
                     tree.edit(node);
                 }
             },
