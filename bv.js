@@ -36,6 +36,7 @@ $(function() {
                     node = tree.create_node(node, {
                         "type": "folder"
                     });
+                    node.type = "folder";
                     oldpath = $("#tree").jstree(true).get_path(node, '/');
                     tree.edit(node);
                 }
@@ -47,6 +48,7 @@ $(function() {
                     node = tree.create_node(node, {
                         "type": "file"
                     });
+                    node.type="file";
                     oldpath = $("#tree").jstree(true).get_path(node, '/');
                     tree.edit(node);
 
@@ -126,6 +128,12 @@ $(function() {
                     "max_children": 1,
                     "max_depth": 4,
                     "valid_children": ["root"]
+                },
+                "folder":{
+                    "icon": "images/blue-folder.png"
+                },
+                "file":{
+                    "icon": "images/blue-document.png"
                 }
             },
             "plugins": ["contextmenu", "dnd", "state", "types", "wholerow"],
@@ -166,9 +174,11 @@ $(function() {
 
         var newpath = $("#tree").jstree(true).get_path(data.node, '/');
         var filename = newpath.replace(/^.*[\\\/]/, '');
-        oldpath = data.old_parent + filename;
-
-        console.log(oldpath);
+        oldpath = $("#tree").jstree(true).get_node(data.old_parent).text + filename;
+        console.log("OLD PARENT = ");
+        console.log(data.instance.get_path($("#tree").jstree(true).get_node(data.old_parent), '/'));
+console.log("=======")
+        oldpath = data.instance.get_path($("#tree").jstree(true).get_node(data.old_parent), '/');
         console.log(newpath);
 
         $.ajax({
@@ -191,7 +201,7 @@ $(function() {
 
     $('#tree').on('create_node.jstree', function(e, data) {
         console.log("createnode.jstree");
-
+        console.log(data.node.type);
         var path = $("#tree").jstree(true).get_path(data.node, '/');
 
         if (data.node.type == "file") {
@@ -255,7 +265,7 @@ $(function() {
                     }
                 })
                 if (!alreadyThere && data.node.icon !== "images/blue-folder.png") {
-                    var tools = $("<div/>").attr("class", "tools").html('<ul class="listOfTools"><li onclick="save(this)" id="save"><img src="images/disk.png"></li>' +
+                    var tools = $("<div/>").attr("class", "tools").html('<ul class="listOfTools"><li onclick="saveDoc(this)" id="save"><img src="images/disk.png"></li>' +
                         '<li onclick="putStyle(this)" id="redo"><img src="images/blue-document-page-next.png"></li>' +
                         '<li onclick="putStyle(this)" id="undo"><img src="images/blue-document-page-previous.png"></li>' +
                         '<li onclick="putStyle(this)" id="justifyleft"><img src="images/edit-alignment-left.png"></li>' +

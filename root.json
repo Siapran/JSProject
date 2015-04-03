@@ -1,1 +1,1 @@
-[{"text": "perso", "icon": "images/blue-folder.png", "children": [{"text": "dsqsd", "icon": "images/blue-document.png"}]}]
+[{"text": "perso", "icon": "images/blue-folder.png", "children": [{"text": "Repertoire", "icon": "images/blue-folder.png", "children": [{"text": "Fichier dans répo1", "icon": "images/blue-folder.png", "children": [{"text": "Fichier dans répo1", "icon": "images/blue-document.png"}]},{"text": "Fichier 1", "icon": "images/blue-document.png"}]},{"text": "dsqdsq", "icon": "images/blue-document.png"}]}]

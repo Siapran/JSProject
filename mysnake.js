@@ -28,8 +28,10 @@ function snake() {
 							};
 						},
 						deplacer : function(d) {
-							var temp = this.snake_array[0];
-							if(d == "right") temp.x++;
+							var temp = {
+								x: this.snake_array[0].x,
+								y: this.snake_array[0].y
+							};							if(d == "right") temp.x++;
 							else if(d == "left") temp.x--;
 							else if(d == "up") temp.y--;
 							else if(d == "down") temp.y++;
@@ -41,7 +43,7 @@ function snake() {
 							if (check_collision(temp.x, temp.y, this.snake_array)) {
 								console.log("hey");
 							}
-							if(temp.x == -1 || temp.x == canvas.width/sizeOfRectangle || temp.y == -1 || temp.y == canvas.height/sizeOfRectangle)
+							if(check_collision(temp.x, temp.y, this.snake_array) || temp.x == -1 || temp.x == canvas.width/sizeOfRectangle || temp.y == -1 || temp.y == canvas.height/sizeOfRectangle)
 							{
 								game.restart();
 							} else {
