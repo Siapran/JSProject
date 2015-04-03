@@ -77,9 +77,30 @@ $(function() {
                     {
                         "label": "Supprimer",
                         "action": function (obj)
-                        { 
+                        {
+
                             var path = $("#tree").jstree(true).get_path(node, '/');
                             tree.delete_node(node);
+
+
+                            //Delete tab
+                            $(function() {
+                                var $tabs = $( "#tabs" );
+                                var offst = 0;
+                                $('#tabs ul#listOfTabs li a').each(function(index, elem) {
+                                    if ($(this).text() == node.text) {
+                                        tabs.tabs().delegate( "span.ui-icon-close", "click", function() {
+                                              var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
+                                              $( "#" + panelId ).remove();
+                                              tabs.tabs( "refresh" );
+                                            });
+                                    }
+
+                                    console.log($(this).text());
+                                    console.log(node.text);
+                                });
+                            });
+
                             $.ajax({
                                 async: true,
                                 type: "POST",
@@ -194,7 +215,17 @@ $(function() {
                     }
                 })
                 if (!alreadyThere && data.node.icon !== "images/blue-folder.png") {
-                    var tools = $("<div/>").attr("class", "tools").html('<ul class="listOfTools"><li onclick="saveDoc(this)"><img src="images/disk.png"></li><li onclick="putStyle(this)"><img src="images/blue-document-page-next.png"></li><li><img src="images/blue-document-page-previous.png"></li><li><img src="images/edit-alignment-left.png"></li><li onclick="putStyle(this)"><img src="images/edit-alignment-center.png"></li><li><img src="images/edit-alignment-right.png"></li><li><img src="images/edit-italic.png"></li><li><img src="images/edit-bold.png"></li><li><img src="images/edit-underline.png"></li><li><img src="images/edit-list.png"></li><li><img src="images/edit-list-order.png"></li></ul>');
+                    var tools = $("<div/>").attr("class", "tools").html('<ul class="listOfTools"><li onclick="save(this)" id="save"><img src="images/disk.png"></li>'+
+                            '<li onclick="putStyle(this)" id="redo"><img src="images/blue-document-page-next.png"></li>'+
+                            '<li onclick="putStyle(this)" id="undo"><img src="images/blue-document-page-previous.png"></li>'+
+                            '<li onclick="putStyle(this)" id="justifyleft"><img src="images/edit-alignment-left.png"></li>'+
+                            '<li onclick="putStyle(this)" id="justifycenter"><img src="images/edit-alignment-center.png"></li>'+
+                            '<li onclick="putStyle(this)" id="justifyright"><img src="images/edit-alignment-right.png"></li> '+
+                            '<li onclick="putStyle(this)" id="italic"><img src="images/edit-italic.png"></li>'+
+                            '<li onclick="putStyle(this)" id="bold"><img src="images/edit-bold.png"></li>'+
+                            '<li onclick="putStyle(this)" id="underline"><img src="images/edit-underline.png"></li>'+
+                            '<li onclick="putStyle(this)" id="InsertUnorderedList"><img src="images/edit-list.png"></li>'+
+                            '<li onclick="putStyle(this)" id="InsertOrderedList"><img src="images/edit-list-order.png"></li></ul>');
                     var content = $("<div/>").attr("class", "content").attr("contenteditable", "true").text(contenuFichier);
                     var num_tabs = $("div#tabs ul#listOfTabs li").length + 1;
                     $("div#tabs ul#listOfTabs").append("<li><a href='#tab" + num_tabs + "'>" + data.node.text + "</a></li>");
@@ -285,7 +316,8 @@ function doRichEditCommand(aName, aArg) {
 
 
 function putStyle(element, fontSizeStyle) {
-    console.log("putsytle")
+    console.log("putsytle");
+    console.log($(element).attr("id"));
     if (typeof fontSizeStyle !== 'undefined') {
         if (fontSizeStyle == "up")
             size++;
