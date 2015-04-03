@@ -39,10 +39,6 @@ function get_tree($dir) {
 	return $res;
 }
 
-echo "{ \"core\" : {
-     \"data\" : [";
-echo get_tree($_GET["dir"]);
-echo "]
+echo "lolmdr";
 
- }," . "\"plugins\" : " . "[\"contextmenu\", \"sort\", \"dnd\", \"state\"] }";
 ?>
