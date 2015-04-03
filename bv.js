@@ -1,9 +1,9 @@
-
-
 $(function() {
 
 
-    $.ajaxSetup({cache : false});
+    $.ajaxSetup({
+        cache: false
+    });
 
     $("#accordion").accordion({
         heightStyle: "fill"
@@ -24,119 +24,111 @@ $(function() {
     });
 
 
-// création du menu contextuel ouvert sur clic droit
-    function createmenu(node) 
-    {
+    // création du menu contextuel ouvert sur clic droit
+    function createmenu(node) {
         var tree = $("#tree").jstree(true);
         return {
-                    "item1": 
-                    {
-                        "label": "Créer répertoire",
-                        "action":function () 
-                        { 
-                            node = tree.create_node(node);
-                            tree.edit(node);
-                            var path = $("#tree").jstree(true).get_path(node, '/');
-                            $.ajax({
-                                async: true,
-                                type: "POST",
-                                url: "./ajaxJSProjectAddRepository.php",
-                                data: {
-                                    "dirname": path
-                                },
+            "item1": {
+                "label": "Créer répertoire",
+                "action": function() {
+                    node = tree.create_node(node, {
+                        "type": "folder"
+                    });
+                    tree.edit(node);
+                }
+            },
 
-                                success: function(response) {
-                                    console.log(response);
-                                }
-                            })
-                        }
-                    },
+            "item2": {
+                "label": "Créer fichier",
+                "action": function() {
+                    node = tree.create_node(node, {
+                        "type": "file"
+                    });
+                    tree.edit(node);
 
-                    "item2": 
-                    {
-                        "label": "Créer fichier",
-                        "action": function () 
-                        { 
-                             node = tree.create_node(node,{"type":"file"});
-                              tree.edit(node);
+                }
+            },
 
-                        }
-                    },
-                          
-                    "item3": 
-                    {
-                        "label": "Renommer fichier",
-                        "action": function (obj) 
-                        { 
-                            oldpath = $("#tree").jstree(true).get_path(node, '/');
-                            tree.edit(node);
-                        }
-                    },                         
-                                                    
-                    "item4": 
-                    {
-                        "label": "Supprimer",
-                        "action": function (obj)
-                        {
+            "item3": {
+                "label": "Renommer fichier",
+                "action": function(obj) {
+                    oldpath = $("#tree").jstree(true).get_path(node, '/');
+                    tree.edit(node);
+                }
+            },
 
-                            var path = $("#tree").jstree(true).get_path(node, '/');
-                            tree.delete_node(node);
+            "item4": {
+                "label": "Supprimer",
+                "action": function(obj) {
+
+                    var path = $("#tree").jstree(true).get_path(node, '/');
+                    tree.delete_node(node);
 
 
-                            //Delete tab
-                            $(function() {
-                                var $tabs = $( "#tabs" );
-                                var offst = 0;
-                                $('#tabs ul#listOfTabs li a').each(function(index, elem) {
-                                    if ($(this).text() == node.text) {
-                                        tabs.tabs().delegate( "span.ui-icon-close", "click", function() {
-                                              var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
-                                              $( "#" + panelId ).remove();
-                                              tabs.tabs( "refresh" );
-                                            });
-                                    }
-
-                                    console.log($(this).text());
-                                    console.log(node.text);
+                    //Delete tab
+                    $(function() {
+                        var $tabs = $("#tabs");
+                        var offst = 0;
+                        $('#tabs ul#listOfTabs li a').each(function(index, elem) {
+                            if ($(this).text() == node.text) {
+                                tabs.tabs().delegate("span.ui-icon-close", "click", function() {
+                                    var panelId = $(this).closest("li").remove().attr("aria-controls");
+                                    $("#" + panelId).remove();
+                                    tabs.tabs("refresh");
                                 });
-                            });
+                            }
 
-                            $.ajax({
-                                async: true,
-                                type: "POST",
-                                url: "./ajaxJSProjectDelete.php",
-                                data: {
-                                    "path": path
-                                },
+                            console.log($(this).text());
+                            console.log(node.text);
+                        });
+                    });
 
-                                success: function(response) {
-                                    console.log(response);
-                                    saveArborescence();
+                    $.ajax({
+                        async: true,
+                        type: "POST",
+                        url: "./ajaxJSProjectDelete.php",
+                        data: {
+                            "path": path
+                        },
 
-                                }
-                            })
+                        success: function(response) {
+                            console.log(response);
+                            saveArborescence();
+
                         }
-                    }
-                };
+                    })
+                }
+            }
+        };
     }
 
 
-    function init()
-    {
+    function init() {
         // initialisation de l'arbre
         $('#tree').jstree({
-                    'core' : {
-                            "animation" : 0,
-                            "check_callback" : true,
-                            "themes" : { "stripes" : true }, 
-                            'data' : {"url" : "./root.json", "dataType" : "json" }// needed only if you do not supply JSON headers
-                              },
-                    "types" : {
-                                "#" : { "max_children" : 1, "max_depth" : 4, "valid_children" : ["root"] }
-                                },
-                    "plugins" : [ "contextmenu", "dnd", "state", "types", "wholerow"],
-                    "contextmenu":{ "items": createmenu}
-                  });
+            'core': {
+                "animation": 0,
+                "check_callback": true,
+                "themes": {
+                    "stripes": true
+                },
+                'data': {
+                    "url": "./root.json",
+                    "dataType": "json"
+                } // needed only if you do not supply JSON headers
+            },
+            "types": {
+                "#": {
+                    "max_children": 1,
+                    "max_depth": 4,
+                    "valid_children": ["root"]
+                }
+            },
+            "plugins": ["contextmenu", "dnd", "state", "types", "wholerow"],
+            "contextmenu": {
+                "items": createmenu
+            }
+        });
     }
     saveArborescence();
     init();
@@ -162,7 +154,7 @@ $(function() {
 
             }
         })
-        
+
     });
     $('#tree').on('move_node.jstree', function(e, data) {
         console.log("move_node");
@@ -170,24 +162,45 @@ $(function() {
 
     $('#tree').on('create_node.jstree', function(e, data) {
         console.log("createnode.jstree");
+
         var path = $("#tree").jstree(true).get_path(data.node, '/');
-        oldpath = path;
-        $.ajax({
-            async: true,
-            type: "POST",
-            url: "./ajaxJSProjectAdd.php",
-            data: {
-                "file": path,
-                "content": ""
-            },
 
-            success: function(response) {
-                console.log(response);
-                saveArborescence();
-            }
-        })
+
+        if (data.node.type == file) {
+            // fichier
+            oldpath = path;
+            $.ajax({
+                async: true,
+                type: "POST",
+                url: "./ajaxJSProjectAdd.php",
+                data: {
+                    "file": path,
+                    "content": ""
+                },
+
+                success: function(response) {
+                    console.log(response);
+                    saveArborescence();
+                }
+            })
+
+        } else {
+            // dossier
+            $.ajax({
+                async: true,
+                type: "POST",
+                url: "./ajaxJSProjectAddRepository.php",
+                data: {
+                    "dirname": path
+                },
+
+                success: function(response) {
+                    console.log(response);
+                    saveArborescence();
+                }
+            })
+        }
     });
-
 
 
 
@@ -215,17 +228,17 @@ $(function() {
                     }
                 })
                 if (!alreadyThere && data.node.icon !== "images/blue-folder.png") {
-                    var tools = $("<div/>").attr("class", "tools").html('<ul class="listOfTools"><li onclick="save(this)" id="save"><img src="images/disk.png"></li>'+
-                            '<li onclick="putStyle(this)" id="redo"><img src="images/blue-document-page-next.png"></li>'+
-                            '<li onclick="putStyle(this)" id="undo"><img src="images/blue-document-page-previous.png"></li>'+
-                            '<li onclick="putStyle(this)" id="justifyleft"><img src="images/edit-alignment-left.png"></li>'+
-                            '<li onclick="putStyle(this)" id="justifycenter"><img src="images/edit-alignment-center.png"></li>'+
-                            '<li onclick="putStyle(this)" id="justifyright"><img src="images/edit-alignment-right.png"></li> '+
-                            '<li onclick="putStyle(this)" id="italic"><img src="images/edit-italic.png"></li>'+
-                            '<li onclick="putStyle(this)" id="bold"><img src="images/edit-bold.png"></li>'+
-                            '<li onclick="putStyle(this)" id="underline"><img src="images/edit-underline.png"></li>'+
-                            '<li onclick="putStyle(this)" id="InsertUnorderedList"><img src="images/edit-list.png"></li>'+
-                            '<li onclick="putStyle(this)" id="InsertOrderedList"><img src="images/edit-list-order.png"></li></ul>');
+                    var tools = $("<div/>").attr("class", "tools").html('<ul class="listOfTools"><li onclick="save(this)" id="save"><img src="images/disk.png"></li>' +
+                        '<li onclick="putStyle(this)" id="redo"><img src="images/blue-document-page-next.png"></li>' +
+                        '<li onclick="putStyle(this)" id="undo"><img src="images/blue-document-page-previous.png"></li>' +
+                        '<li onclick="putStyle(this)" id="justifyleft"><img src="images/edit-alignment-left.png"></li>' +
+                        '<li onclick="putStyle(this)" id="justifycenter"><img src="images/edit-alignment-center.png"></li>' +
+                        '<li onclick="putStyle(this)" id="justifyright"><img src="images/edit-alignment-right.png"></li> ' +
+                        '<li onclick="putStyle(this)" id="italic"><img src="images/edit-italic.png"></li>' +
+                        '<li onclick="putStyle(this)" id="bold"><img src="images/edit-bold.png"></li>' +
+                        '<li onclick="putStyle(this)" id="underline"><img src="images/edit-underline.png"></li>' +
+                        '<li onclick="putStyle(this)" id="InsertUnorderedList"><img src="images/edit-list.png"></li>' +
+                        '<li onclick="putStyle(this)" id="InsertOrderedList"><img src="images/edit-list-order.png"></li></ul>');
                     var content = $("<div/>").attr("class", "content").attr("contenteditable", "true").text(contenuFichier);
                     var num_tabs = $("div#tabs ul#listOfTabs li").length + 1;
                     $("div#tabs ul#listOfTabs").append("<li><a href='#tab" + num_tabs + "'>" + data.node.text + "</a></li>");
@@ -294,10 +307,6 @@ function saveDoc(element) {
             console.log(data);
         });
 }
-
-
-
-
 
 
 
