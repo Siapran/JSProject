@@ -59,6 +59,7 @@ $(function() {
                 "label": "Renommer fichier",
                 "action": function(obj) {
                     oldpath = $("#tree").jstree(true).get_path(node, '/');
+                    beforeRename = node.text;
                     tree.edit(node);
                 }
             },
@@ -66,33 +67,38 @@ $(function() {
             "item4": {
                 "label": "Supprimer",
                 "action": function(obj) {
+                    if (node.children[0] == null) {
+                        if (confirm("Vous allez supprimer  " + node.text + ", continuer ?")) {
+                            var path = $("#tree").jstree(true).get_path(node, '/');
+                            tree.delete_node(node);
+                            $("div#tabs ul#listOfTabs li").each(function(index) {
+                                if ($(this).children().text() == node.text) {
+                                    var panelId = $(this).remove().attr( "aria-controls" );
+                                    $( "#" + panelId ).remove();
+                                    $("div#tabs").tabs("refresh");
+                                }
+                            })
 
-                    var path = $("#tree").jstree(true).get_path(node, '/');
-                    tree.delete_node(node);
-                    $("div#tabs ul#listOfTabs li").each(function(index) {
-                        if ($(this).children().text() == node.text) {
-                            var panelId = $(this).remove().attr( "aria-controls" );
-                            $( "#" + panelId ).remove();
-                            $("div#tabs").tabs("refresh");
+
+                            $.ajax({
+                                async: true,
+                                type: "POST",
+                                url: "./ajaxJSProjectDelete.php",
+                                data: {
+                                    "type": node.type,
+                                    "path": path
+                                },
+
+                                success: function(response) {
+                                    console.log(response);
+                                    saveArborescence();
+
+                                }
+                            })
+                        } else {
+                            console.log("ne supprime pas");
                         }
-                    })
-
-
-                    $.ajax({
-                        async: true,
-                        type: "POST",
-                        url: "./ajaxJSProjectDelete.php",
-                        data: {
-                            "type": node.type,
-                            "path": path
-                        },
-
-                        success: function(response) {
-                            console.log(response);
-                            saveArborescence();
-
-                        }
-                    })
+                    }
                 }
             }
         };
@@ -144,6 +150,12 @@ $(function() {
         console.log("rename_node");
         var newpath = $("#tree").jstree(true).get_path(data.node, '/');
 
+        $("div#tabs ul#listOfTabs li").each(function(index) {
+            if ($(this).children().text() == beforeRename) {
+                $(this).children().text(data.node.text);
+            }
+        })
+
         $.ajax({
             async: true,
             type: "POST",
@@ -194,7 +206,6 @@ $(function() {
 
     $('#tree').on('create_node.jstree', function(e, data) {
         console.log("createnode.jstree");
-        console.log(data.node.type);
         var path = $("#tree").jstree(true).get_path(data.node, '/');
 
         if (data.node.type == "file") {
@@ -272,7 +283,7 @@ $(function() {
                     var content = $("<div/>").attr("class", "content").attr("contenteditable", "true").text(contenuFichier);
                     var num_tabs = $("div#tabs ul#listOfTabs li").length + 1;
                     $("div#tabs ul#listOfTabs").append("<li><a href='#tab" + num_tabs + "'>" + data.node.text + "</a></li>");
-                    $("div#tabs").append("<div id='tab" + num_tabs + "'><h4 class='inline'>Title : </h4><div class='title' id='titleEditable' contenteditable='true'>" + data.node.text + "</div>" + "</div>");
+                    $("div#tabs").append("<div id='tab" + num_tabs + "'></div>");
                     $("div#tabs").tabs("refresh");
                     $("div#tab" + num_tabs).append(tools);
                     $("div#tab" + num_tabs).append(content);
