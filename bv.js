@@ -1,3 +1,5 @@
+var oldpath;
+
 $(function() {
 
 
@@ -167,7 +169,6 @@ $(function() {
 
         if (data.node.type == "file") {
             // fichier
-            oldpath = path;
             $.ajax({
                 async: true,
                 type: "POST",
