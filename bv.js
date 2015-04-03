@@ -72,7 +72,7 @@ $(function() {
 
 
                     //Delete tab
-                    $(function() {
+/*                    $(function() {
                         var $tabs = $("#tabs");
                         var offst = 0;
                         $('#tabs ul#listOfTabs li a').each(function(index, elem) {
@@ -88,12 +88,13 @@ $(function() {
                             console.log(node.text);
                         });
                     });
-
+*/                  console.log("TYPE = " + node.type);
                     $.ajax({
                         async: true,
                         type: "POST",
                         url: "./ajaxJSProjectDelete.php",
                         data: {
+                            "type": node.type,
                             "path": path
                         },
 
@@ -142,6 +143,8 @@ $(function() {
             }
         });
     }
+
+    
     saveArborescence();
     init();
 
