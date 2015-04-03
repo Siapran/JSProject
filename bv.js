@@ -144,7 +144,7 @@ $(function() {
         });
     }
 
-    
+
     saveArborescence();
     init();
 
@@ -194,7 +194,9 @@ console.log("=======")
             },
 
             success: function(response) {
+                console.log("réponse : ")
                 console.log(response);
+                console.log("fin réponse");
                 saveArborescence();
 
             }
