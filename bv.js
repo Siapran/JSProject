@@ -33,6 +33,7 @@ $(function() {
             "item1": {
                 "label": "Créer répertoire",
                 "action": function() {
+                    oldpath = $("#tree").jstree(true).get_path(node, '/');
                     node = tree.create_node(node, {
                         "type": "folder"
                     });
@@ -43,6 +44,7 @@ $(function() {
             "item2": {
                 "label": "Créer fichier",
                 "action": function() {
+                    oldpath = $("#tree").jstree(true).get_path(node, '/');
                     node = tree.create_node(node, {
                         "type": "file"
                     });
@@ -55,7 +57,6 @@ $(function() {
                 "label": "Renommer fichier",
                 "action": function(obj) {
                     oldpath = $("#tree").jstree(true).get_path(node, '/');
-                    console.log(oldpath);
                     tree.edit(node);
                 }
             },
@@ -142,9 +143,6 @@ $(function() {
     $('#tree').on('rename_node.jstree', function(e, data) {
         console.log("rename_node");
         var newpath = $("#tree").jstree(true).get_path(data.node, '/');
-
-        console.log(oldpath);
-        console.log(newpath);
 
         $.ajax({
             async: true,
