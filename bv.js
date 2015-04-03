@@ -168,6 +168,9 @@ $(function() {
         var filename = newpath.replace(/^.*[\\\/]/, '');
         oldpath = data.old_parent + filename;
 
+        console.log(oldpath);
+        console.log(newpath);
+
         $.ajax({
             async: true,
             type: "POST",
