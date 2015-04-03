@@ -33,10 +33,10 @@ $(function() {
             "item1": {
                 "label": "Créer répertoire",
                 "action": function() {
-                    oldpath = $("#tree").jstree(true).get_path(node, '/');
                     node = tree.create_node(node, {
                         "type": "folder"
                     });
+                    oldpath = $("#tree").jstree(true).get_path(node, '/');
                     tree.edit(node);
                 }
             },
@@ -44,10 +44,10 @@ $(function() {
             "item2": {
                 "label": "Créer fichier",
                 "action": function() {
-                    oldpath = $("#tree").jstree(true).get_path(node, '/');
                     node = tree.create_node(node, {
                         "type": "file"
                     });
+                    oldpath = $("#tree").jstree(true).get_path(node, '/');
                     tree.edit(node);
 
                 }
